@@ -17,7 +17,12 @@ namespace NorthwindWeb.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(db.Customers.ToList());
+            return View(GetAll());
+        }
+
+        private List<Customer> GetAll()
+        {
+            return db.Customers.ToList();
         }
 
         // GET: Customers/Details/5
@@ -27,12 +32,17 @@ namespace NorthwindWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
+            Customer customer = GetCustomerById(id);
             if (customer == null)
             {
                 return HttpNotFound();
             }
             return View(customer);
+        }
+
+        private Customer GetCustomerById(string id)
+        {
+            return db.Customers.Find(id);
         }
 
         // GET: Customers/Create
@@ -50,12 +60,17 @@ namespace NorthwindWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Customers.Add(customer);
-                db.SaveChanges();
+                CreateCustomer(customer);
                 return RedirectToAction("Index");
             }
 
             return View(customer);
+        }
+
+        private void CreateCustomer(Customer customer)
+        {
+            db.Customers.Add(customer);
+            db.SaveChanges();
         }
 
         // GET: Customers/Edit/5
@@ -65,7 +80,7 @@ namespace NorthwindWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
+            Customer customer = GetCustomerById(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -82,11 +97,16 @@ namespace NorthwindWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customer).State = EntityState.Modified;
-                db.SaveChanges();
+                Update(customer);
                 return RedirectToAction("Index");
             }
             return View(customer);
+        }
+
+        private void Update(Customer customer)
+        {
+            db.Entry(customer).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
         // GET: Customers/Delete/5
@@ -96,7 +116,7 @@ namespace NorthwindWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
+            Customer customer = GetCustomerById(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -109,10 +129,15 @@ namespace NorthwindWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = GetCustomerById(id);
+            Delete(customer);
+            return RedirectToAction("Index");
+        }
+
+        private void Delete(Customer customer)
+        {
             db.Customers.Remove(customer);
             db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
