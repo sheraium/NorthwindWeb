@@ -56,6 +56,14 @@ namespace NorthwindWeb.UnitTests
             CustomerShouldBeUpdated(customer);
         }
 
+        [TestMethod]
+        public void delete()
+        {
+            var customer = new Customer() {CustomerID = "PETER"};
+            _customersService.Delete(customer);
+            _repository.Received().Remove(Arg.Is<Customer>(c => c.CustomerID == customer.CustomerID));
+        }
+
         private void CustomerShouldBeUpdated(Customer customer)
         {
             _repository.Received().Update(Arg.Is<Customer>(c => c.CustomerID == customer.CustomerID));
