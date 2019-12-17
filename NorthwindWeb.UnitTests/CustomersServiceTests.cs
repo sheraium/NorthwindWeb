@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NorthwindWeb.Models;
 using NorthwindWeb.Repository;
 using NorthwindWeb.Services;
 using NSubstitute;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace NorthwindWeb.UnitTests
 {
@@ -38,6 +38,13 @@ namespace NorthwindWeb.UnitTests
         {
             GivenOneCustomer(new Customer() {CustomerID = "ANATR", ContactName = "Ana Trujillo"});
             CustomerIdShould("ANATR");
+        }
+
+        [TestMethod]
+        public void create()
+        {
+            _customersService.Create(new Customer() {CustomerID = "PETER"});
+            _repository.Received().Create(Arg.Is<Customer>(c => c.CustomerID == "PETER"));
         }
 
         private void CustomerIdShould(string customerId)
