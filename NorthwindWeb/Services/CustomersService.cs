@@ -7,13 +7,13 @@ namespace NorthwindWeb.Services
 {
     public class CustomersService
     {
-        private Repository<Customer> _repository;
+        private IRepository<Customer> _repository;
         private IUnitOfWork _unitOfWork;
 
-        public CustomersService(IUnitOfWork unitOfWork)
+        public CustomersService(IUnitOfWork unitOfWork, IRepository<Customer> repository)
         {
             _unitOfWork = unitOfWork;
-            _repository = new Repository<Customer>(_unitOfWork);
+            _repository = repository;
         }
 
         public List<Customer> GetAll()

@@ -4,6 +4,7 @@ using NorthwindWeb.Repository;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
+using NorthwindWeb.Models;
 
 namespace NorthwindWeb.App_Start
 {
@@ -18,6 +19,9 @@ namespace NorthwindWeb.App_Start
 
             // Register UnitOfWork
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+
+            // Register Repository
+            builder.RegisterType<Repository<Customer>>().As<IRepository<Customer>>();
 
             // Register Services
             //builder.RegisterType<Service>().As<Service>();
