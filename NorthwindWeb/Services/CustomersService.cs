@@ -8,11 +8,11 @@ namespace NorthwindWeb.Services
     public class CustomersService
     {
         private Repository<Customer> _repository;
-        private UnitOfWork _unitOfWork;
+        private IUnitOfWork _unitOfWork;
 
-        public CustomersService()
+        public CustomersService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _repository = new Repository<Customer>(_unitOfWork);
         }
 
