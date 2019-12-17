@@ -9,7 +9,6 @@ namespace NorthwindWeb.Services
     public class CustomersService
     {
         private NorthwindDb db = new NorthwindDb();
-        private CustomersController _customersController;
 
         public CustomersService()
         {
