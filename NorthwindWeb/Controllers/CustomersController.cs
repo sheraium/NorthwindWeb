@@ -9,9 +9,9 @@ namespace NorthwindWeb.Controllers
     {
         private readonly CustomersService _customersService;
 
-        public CustomersController()
+        public CustomersController(CustomersService customersService)
         {
-            _customersService = new CustomersService();
+            _customersService = customersService;
         }
 
         // GET: Customers
