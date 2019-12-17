@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NorthwindWeb.Models;
 using NorthwindWeb.Repository;
 using NorthwindWeb.Services;
 using NSubstitute;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NorthwindWeb.UnitTests
 {
@@ -38,6 +38,13 @@ namespace NorthwindWeb.UnitTests
         public void get_all()
         {
             CustomersCountShouldBe(CustomersCount);
+        }
+
+        [TestMethod]
+        public void get_by_id()
+        {
+            var customer = _customersService.GetById("ANATR");
+            Assert.AreEqual("Ana Trujillo", customer.ContactName);
         }
 
         private void CustomersCountShouldBe(int expected)
