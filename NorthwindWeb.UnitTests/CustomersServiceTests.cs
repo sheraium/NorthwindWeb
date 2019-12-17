@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NorthwindWeb.Models;
 using NorthwindWeb.Repository;
@@ -43,7 +45,11 @@ namespace NorthwindWeb.UnitTests
         [TestMethod]
         public void get_by_id()
         {
+            _repository.GetSingle(Arg.Any<Expression<Func<Customer, bool>>>())
+                .Returns(new Customer() {CustomerID = "ANATR", ContactName = "Ana Trujillo"});
+
             var customer = _customersService.GetById("ANATR");
+
             Assert.AreEqual("Ana Trujillo", customer.ContactName);
         }
 
