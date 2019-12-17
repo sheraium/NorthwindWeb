@@ -20,12 +20,12 @@ namespace NorthwindWeb.Services
             return db.Customers.ToList();
         }
 
-        public Customer GetCustomerById(string id)
+        public Customer GetById(string id)
         {
             return db.Customers.Find(id);
         }
 
-        public void CreateCustomer(Customer customer)
+        public void Create(Customer customer)
         {
             db.Customers.Add(customer);
             db.SaveChanges();

@@ -28,7 +28,7 @@ namespace NorthwindWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Customer customer = _customersService.GetCustomerById(id);
+            Customer customer = _customersService.GetById(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -54,7 +54,7 @@ namespace NorthwindWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _customersService.CreateCustomer(customer);
+                _customersService.Create(customer);
                 return RedirectToAction("Index");
             }
 
@@ -69,7 +69,7 @@ namespace NorthwindWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Customer customer = _customersService.GetCustomerById(id);
+            Customer customer = _customersService.GetById(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -104,7 +104,7 @@ namespace NorthwindWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Customer customer = _customersService.GetCustomerById(id);
+            Customer customer = _customersService.GetById(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -118,7 +118,7 @@ namespace NorthwindWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Customer customer = _customersService.GetCustomerById(id);
+            Customer customer = _customersService.GetById(id);
             _customersService.Delete(customer);
             return RedirectToAction("Index");
         }
