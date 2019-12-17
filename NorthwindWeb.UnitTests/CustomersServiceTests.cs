@@ -52,8 +52,18 @@ namespace NorthwindWeb.UnitTests
         public void update()
         {
             var customer = new Customer() {CustomerID = "PETER"};
-            _customersService.Update(customer);
+            UpdateCustomer(customer);
+            CustomerShouldBeUpdated(customer);
+        }
+
+        private void CustomerShouldBeUpdated(Customer customer)
+        {
             _repository.Received().Update(Arg.Is<Customer>(c => c.CustomerID == customer.CustomerID));
+        }
+
+        private void UpdateCustomer(Customer customer)
+        {
+            _customersService.Update(customer);
         }
 
         private void NewCustomerIdShouldBe(string expected)
