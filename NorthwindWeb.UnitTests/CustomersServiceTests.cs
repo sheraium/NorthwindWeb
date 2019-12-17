@@ -43,8 +43,19 @@ namespace NorthwindWeb.UnitTests
         [TestMethod]
         public void create()
         {
-            _customersService.Create(new Customer() {CustomerID = "PETER"});
-            _repository.Received().Create(Arg.Is<Customer>(c => c.CustomerID == "PETER"));
+            var customer = new Customer() {CustomerID = "PETER"};
+            CreateCustomer(customer);
+            NewCustomerIdShouldBe(customer.CustomerID);
+        }
+
+        private void NewCustomerIdShouldBe(string expected)
+        {
+            _repository.Received().Create(Arg.Is<Customer>(c => c.CustomerID == expected));
+        }
+
+        private void CreateCustomer(Customer customer)
+        {
+            _customersService.Create(customer);
         }
 
         private void CustomerIdShould(string customerId)
