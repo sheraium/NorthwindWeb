@@ -13,6 +13,7 @@ namespace NorthwindWeb.UnitTests
     [TestClass]
     public class CustomersServiceTests
     {
+        private readonly Customer Customer_Peter = new Customer() {CustomerID = "PETER"};
         private CustomersService _customersService;
         private IRepository<Customer> _repository;
         private IUnitOfWork _unitOfWork;
@@ -36,31 +37,38 @@ namespace NorthwindWeb.UnitTests
         [TestMethod]
         public void get_by_id()
         {
-            GivenOneCustomer(new Customer() {CustomerID = "ANATR", ContactName = "Ana Trujillo"});
-            CustomerIdShould("ANATR");
+            GivenOneCustomer(Customer_Peter);
+            CustomerIdShould(Customer_Peter.CustomerID);
         }
 
         [TestMethod]
         public void create()
         {
-            var customer = new Customer() {CustomerID = "PETER"};
-            CreateCustomer(customer);
-            NewCustomerIdShouldBe(customer.CustomerID);
+            CreateCustomer(Customer_Peter);
+            NewCustomerIdShouldBe(Customer_Peter.CustomerID);
         }
 
         [TestMethod]
         public void update()
         {
-            var customer = new Customer() {CustomerID = "PETER"};
-            UpdateCustomer(customer);
-            CustomerShouldBeUpdated(customer);
+            UpdateCustomer(Customer_Peter);
+            CustomerShouldBeUpdated(Customer_Peter);
         }
 
         [TestMethod]
         public void delete()
         {
-            var customer = new Customer() {CustomerID = "PETER"};
+            DeleteCustomer(Customer_Peter);
+            CustomerShouldBeDeleted(Customer_Peter);
+        }
+
+        private void DeleteCustomer(Customer customer)
+        {
             _customersService.Delete(customer);
+        }
+
+        private void CustomerShouldBeDeleted(Customer customer)
+        {
             _repository.Received().Remove(Arg.Is<Customer>(c => c.CustomerID == customer.CustomerID));
         }
 
